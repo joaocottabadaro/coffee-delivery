@@ -1,18 +1,16 @@
 import { NavLink } from 'react-router-dom'
 import { HeaderContainer } from './styles'
-import { Scroll, Timer, Alien } from 'phosphor-react'
+import logo from '../../assets/logo.svg'
+import headerCart from '../../assets/headerCart.svg'
 
 export default function Header() {
   return (
     <HeaderContainer>
-      <Alien size={24} />
+      <img src={logo} alt="logo" />
 
       <nav>
-        <NavLink to="/" title="Timer">
-          <Timer size={24} />
-        </NavLink>
-        <NavLink to="/history" title="Histórico">
-          <Scroll size={24} />
+        <NavLink to="/Checkout" title="Checkout">
+          <img src={headerCart} alt="carrinho" />
         </NavLink>
       </nav>
     </HeaderContainer>

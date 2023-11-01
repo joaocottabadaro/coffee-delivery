@@ -1,18 +1,32 @@
 import styled from 'styled-components'
 
-export type ButtonVariant = 'primary' | 'secondary' | 'danger' | 'neutral'
+export type ButtonVariant = 'primary' | 'neutral'
 
 export interface ButtonContainerProps {
   variant: ButtonVariant
 }
 
+const buttonVariants = {
+  primary: 'yellow', // Substitua por sua cor primária
+  neutral: 'base-button', // Substitua pelo nome da variável no tema
+}
+const buttonVariantsText = {
+  primary: 'white', // Substitua por sua cor primária
+  neutral: 'base-text', // Substitua pelo nome da variável no tema
+}
+
 export const ButtonContainer = styled.button<ButtonContainerProps>`
-  width: 100px;
-  height: 40px;
-  margin: 8px;
+  height: 50px;
   border-radius: 4px;
   border: 0;
 
-  background-color: ${(props) => props.theme['green-300']};
-  color: ${(props) => props.theme.white};
+  display: flex;
+  padding: 1rem;
+  align-items: center;
+  gap: 0.75rem;
+
+  background-color: ${(props) =>
+    props.theme[buttonVariants[props.variant]]}; // Use o tema diretamente
+
+  color: ${(props) => props.theme[buttonVariantsText[props.variant]]};
 `

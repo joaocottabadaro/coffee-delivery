@@ -21,7 +21,7 @@ body{
 
 body,input, textarea, button{
     font-family: 'Roboto', sans-serif;
-
+    background-color:   ${(props) => props.theme[`base-input`]};
     font-weight:400;
     font-size:1rem;
 } 
