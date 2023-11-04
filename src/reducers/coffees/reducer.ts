@@ -9,19 +9,40 @@ export interface CoffeesState {
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function OrderReducer(state: CoffeesState, action: any) {
   switch (action.type) {
-    case ActionTypes.ADD_NEW_COFFEE:
-      return produce(state, (draft) => {
-        draft.coffees.push(action.payload.coffee)
+    case ActionTypes.DECREASE_COFFEE_QUANTITY: {
+      const currentCoffeeIndex = state.coffees.findIndex((coffee) => {
+        return coffee.id === action.payload.coffee.id
       })
 
-    case ActionTypes.REMOVE_COFFEE:
+      if (currentCoffeeIndex < 0) return state
       return produce(state, (draft) => {
-        const filteredCoffees = draft.coffees.filter((coffee) => {
-          return coffee.id === action.payload.coffee.id
-        })
-        draft.coffees = filteredCoffees
+        if (draft.coffees[currentCoffeeIndex].quantity === 0) {
+          draft.coffees.splice(currentCoffeeIndex, 1)
+        } else {
+          draft.coffees[currentCoffeeIndex].quantity -= 1
+        }
       })
+    }
+    case ActionTypes.INCREASE_COFFEE_QUANTITY: {
+      const currentCoffeeIndex = state.coffees.findIndex((coffee) => {
+        return coffee.id === action.payload.coffee.id
+      })
+      console.log(
+        '🚀 ~ file: reducer.ts:29 ~ currentCoffeeIndex ~ currentCoffeeIndex:',
+        currentCoffeeIndex,
+      )
 
+      return produce(state, (draft) => {
+        if (currentCoffeeIndex < 0) {
+          draft.coffees.push({
+            ...action.payload.coffee,
+            quantity: 1,
+          })
+        } else {
+          draft.coffees[currentCoffeeIndex].quantity += 1
+        }
+      })
+    }
     default:
       return state
   }

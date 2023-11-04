@@ -5,7 +5,7 @@ import { RouterProvider, createBrowserRouter } from 'react-router-dom'
 import { Checkout } from './pages/Checkout/index.tsx'
 import DefaultLayout from './layouts/DefaultLayouts/index.tsx'
 import { Home } from './pages/Home/index.tsx'
-import CoffeesContextProvider from './contexts/CoffeesContextProvider.tsx'
+import CoffeesContextProvider from './contexts/OrderContextProvider.tsx'
 
 const router = createBrowserRouter([
   {

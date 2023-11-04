@@ -16,8 +16,12 @@ import { Button } from '../../components/Button'
 import { Bank, Money, CreditCard, Trash, Minus, Plus } from 'phosphor-react'
 
 import expressoTradicional from '../../assets/expresso-tradicional.png'
+import { OrderContext } from '../../contexts/OrderContextProvider'
+import { useContext } from 'react'
 
 export function Checkout() {
+  const { coffees, updateCoffeeQuantity } = useContext(OrderContext)
+
   return (
     <div>
       <div>
@@ -131,6 +135,7 @@ export function Checkout() {
                       <span> R$</span> 9,90
                     </strong>
                   </SelectedCoffee>
+
                   <SelectedCoffee>
                     <img
                       src={expressoTradicional}
@@ -156,6 +161,44 @@ export function Checkout() {
                     </strong>
                   </SelectedCoffee>
 
+                  {coffees.map((coffee) => {
+                    return (
+                      <SelectedCoffee key={coffee.id}>
+                        <img
+                          src={expressoTradicional}
+                          height={64}
+                          alt="adicionar café"
+                        />
+                        <div>
+                          <p>{coffee.name}</p>
+                          <AddRemoveCoffeeContainer>
+                            <div>
+                              <Minus
+                                size={16}
+                                onClick={() =>
+                                  updateCoffeeQuantity(coffee, 'DECREASE')
+                                }
+                              />
+                              <span>{coffee.quantity}</span>
+                              <Plus
+                                size={16}
+                                onClick={() =>
+                                  updateCoffeeQuantity(coffee, 'INCREASE')
+                                }
+                              />
+                            </div>
+                            <div>
+                              <Trash size={16} /> <p>Remover</p>
+                            </div>
+                          </AddRemoveCoffeeContainer>
+                        </div>
+
+                        <strong>
+                          <span> R$</span> {coffee.price}
+                        </strong>
+                      </SelectedCoffee>
+                    )
+                  })}
                   <CheckoutContainer>
                     <CheckoutInfo>
                       <p>Total de itens</p>

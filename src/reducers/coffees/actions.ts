@@ -1,21 +1,21 @@
 import { CoffeeProps } from '../../pages/Home/components/CoffeeSection/components/Coffee'
 
 export enum ActionTypes {
-  ADD_NEW_COFFEE = 'ADD_NEW_COFFEE',
-  REMOVE_COFFEE = 'REMOVE_COFEE',
+  INCREASE_COFFEE_QUANTITY = 'INCREASE_COFFEE_QUANTITY',
+  DECREASE_COFFEE_QUANTITY = 'DECREASE_COFFEE_QUANTITY',
 }
 
-export function addCoffeeToOrder(coffee: CoffeeProps) {
+export function increaseCoffeeQuantityAction(coffee: CoffeeProps) {
   return {
-    type: ActionTypes.ADD_NEW_COFFEE,
+    type: ActionTypes.INCREASE_COFFEE_QUANTITY,
     payload: {
       coffee,
     },
   }
 }
-export function removeCoffeeFromOrder(coffee: CoffeeProps) {
+export function decreaseCoffeeQuantityAction(coffee: CoffeeProps) {
   return {
-    type: ActionTypes.REMOVE_COFFEE,
+    type: ActionTypes.DECREASE_COFFEE_QUANTITY,
     payload: {
       coffee,
     },

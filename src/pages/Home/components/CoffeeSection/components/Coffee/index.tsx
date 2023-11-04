@@ -1,5 +1,3 @@
-import plus from '../../../../../../assets/plus.svg'
-import minus from '../../../../../../assets/minus.svg'
 import expressoTradicional from '../../../../../../assets/expresso-tradicional.png'
 import shoppingCart from '../../../../../../assets/ShoppingCart.svg'
 import {
@@ -11,7 +9,9 @@ import {
   CoffeeTagContainer,
   CoffeeTitle,
 } from './styles'
-import { useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
+import { OrderContext } from '../../../../../../contexts/OrderContextProvider'
+import { Minus, Plus } from 'phosphor-react'
 
 export interface CoffeeProps {
   id: string
@@ -21,25 +21,37 @@ export interface CoffeeProps {
   price: number
   quantity: number
 }
-export function Coffee({
-  name,
-  types,
-  description,
-  price,
-  quantity = 0,
-}: CoffeeProps) {
-  const [selectedQuantity, setSelectedQuantity] = useState(quantity)
+export function Coffee(props: CoffeeProps) {
+  const { name, types, description, price, id } = props
+  const { coffees, updateCoffeeQuantity } = useContext(OrderContext)
+  const [coffeeQuantity, setCoffeeQuantity] = useState(0)
+  const isCoffeeInArray = (coffees: CoffeeProps[], id: string) => {
+    const coffeeIds = coffees.map((coffee) => coffee.id) // Crie um array apenas com os IDs dos cafés
+    const isCoffeeInArray = coffeeIds.includes(id) // Use Array.includes para verificar se o ID está no array
+
+    return isCoffeeInArray
+  }
 
   function increaseCoffeeQuantity() {
-    setSelectedQuantity((state) => state + 1)
+    updateCoffeeQuantity(props, 'INCREASE')
   }
 
   function decreaseCoffeeQuantity() {
-    if (selectedQuantity === 0) {
-      return
-    }
-    setSelectedQuantity((state) => state - 1)
+    updateCoffeeQuantity(props, 'DECREASE')
   }
+
+  useEffect(() => {
+    if (coffees.length > 0 && isCoffeeInArray(coffees, id)) {
+      console.log('id', id)
+      const currentCoffeeIndex = coffees.findIndex((coffee) => {
+        return coffee.id === id
+      })
+      setCoffeeQuantity(coffees[currentCoffeeIndex]?.quantity)
+    } else {
+      setCoffeeQuantity(0)
+    }
+  }, [coffees, id])
+
   return (
     <CoffeeItem>
       <CoffeeImage src={expressoTradicional} />
@@ -55,17 +67,9 @@ export function Coffee({
         </p>
 
         <div>
-          <img
-            src={minus}
-            alt="remover café"
-            onClick={decreaseCoffeeQuantity}
-          />
-          <input type="number" value={selectedQuantity} />
-          <img
-            src={plus}
-            alt="adicionar café"
-            onClick={increaseCoffeeQuantity}
-          />
+          <Minus alt="remover café" onClick={decreaseCoffeeQuantity} />
+          <input type="number" value={coffeeQuantity} disabled />
+          <Plus alt="adicionar café" onClick={increaseCoffeeQuantity} />
         </div>
         <img src={shoppingCart} alt="ir para o carrinho" />
       </AddItemsContainer>

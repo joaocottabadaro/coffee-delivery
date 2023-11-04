@@ -109,4 +109,8 @@ export const AddItemsContainer = styled.div`
 
     font-weight: 400;
   }
+
+  svg {
+    cursor: pointer;
+  }
 `

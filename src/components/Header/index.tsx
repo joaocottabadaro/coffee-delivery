@@ -6,7 +6,9 @@ import headerCart from '../../assets/headerCart.svg'
 export default function Header() {
   return (
     <HeaderContainer>
-      <img src={logo} alt="logo" />
+      <NavLink to="/" title="home">
+        <img src={logo} alt="logo" />
+      </NavLink>
 
       <nav>
         <NavLink to="/Checkout" title="Checkout">

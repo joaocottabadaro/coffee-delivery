@@ -3,7 +3,7 @@ import styled from 'styled-components'
 export type ButtonVariant = 'primary' | 'neutral'
 
 export interface ButtonContainerProps {
-  variant: ButtonVariant
+  $variant: ButtonVariant
 }
 
 const buttonVariants = {
@@ -26,7 +26,7 @@ export const ButtonContainer = styled.button<ButtonContainerProps>`
   gap: 0.75rem;
 
   background-color: ${(props) =>
-    props.theme[buttonVariants[props.variant]]}; // Use o tema diretamente
+    props.theme[buttonVariants[props.$variant]]}; // Use o tema diretamente
 
-  color: ${(props) => props.theme[buttonVariantsText[props.variant]]};
+  color: ${(props) => props.theme[buttonVariantsText[props.$variant]]};
 `
