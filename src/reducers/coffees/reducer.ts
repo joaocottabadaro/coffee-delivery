@@ -15,11 +15,18 @@ export function OrderReducer(state: CoffeesState, action: any) {
       })
 
       if (currentCoffeeIndex < 0) return state
+      console.log(
+        '🚀 ~ file: reducer.ts:18 ~ OrderReducer ~ currentCoffeeIndex:',
+        currentCoffeeIndex,
+      )
       return produce(state, (draft) => {
+        console.log(
+          '🚀 ~ file: reducer.ts:24 ~ returnproduce ~ draft.coffees[currentCoffeeIndex].quantit:',
+          draft.coffees[currentCoffeeIndex].quantity,
+        )
+        draft.coffees[currentCoffeeIndex].quantity -= 1
         if (draft.coffees[currentCoffeeIndex].quantity === 0) {
           draft.coffees.splice(currentCoffeeIndex, 1)
-        } else {
-          draft.coffees[currentCoffeeIndex].quantity -= 1
         }
       })
     }
@@ -27,10 +34,6 @@ export function OrderReducer(state: CoffeesState, action: any) {
       const currentCoffeeIndex = state.coffees.findIndex((coffee) => {
         return coffee.id === action.payload.coffee.id
       })
-      console.log(
-        '🚀 ~ file: reducer.ts:29 ~ currentCoffeeIndex ~ currentCoffeeIndex:',
-        currentCoffeeIndex,
-      )
 
       return produce(state, (draft) => {
         if (currentCoffeeIndex < 0) {

@@ -111,56 +111,6 @@ export function Checkout() {
               <div>
                 <h2>Cafés selecionados</h2>
                 <CheckoutCard>
-                  <SelectedCoffee>
-                    <img
-                      src={expressoTradicional}
-                      height={64}
-                      alt="adicionar café"
-                    />
-                    <div>
-                      <p>Expresso Tradicional</p>
-                      <AddRemoveCoffeeContainer>
-                        <div>
-                          <Minus size={16} />
-                          <span>1</span>
-                          <Plus size={16} />
-                        </div>
-                        <div>
-                          <Trash size={16} /> <p>Remover</p>
-                        </div>
-                      </AddRemoveCoffeeContainer>
-                    </div>
-
-                    <strong>
-                      <span> R$</span> 9,90
-                    </strong>
-                  </SelectedCoffee>
-
-                  <SelectedCoffee>
-                    <img
-                      src={expressoTradicional}
-                      height={64}
-                      alt="adicionar café"
-                    />
-                    <div>
-                      <p>Expresso Tradicional</p>
-                      <AddRemoveCoffeeContainer>
-                        <div>
-                          <Minus size={16} />
-                          <span>1</span>
-                          <Plus size={16} />
-                        </div>
-                        <div>
-                          <Trash size={16} /> <p>Remover</p>
-                        </div>
-                      </AddRemoveCoffeeContainer>
-                    </div>
-
-                    <strong>
-                      <span> R$</span> 9,90
-                    </strong>
-                  </SelectedCoffee>
-
                   {coffees.map((coffee) => {
                     return (
                       <SelectedCoffee key={coffee.id}>
