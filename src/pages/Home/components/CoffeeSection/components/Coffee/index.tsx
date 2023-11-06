@@ -12,6 +12,7 @@ import {
 import { useContext, useEffect, useState } from 'react'
 import { OrderContext } from '../../../../../../contexts/OrderContextProvider'
 import { Minus, Plus } from 'phosphor-react'
+import { NavLink } from 'react-router-dom'
 
 export interface CoffeeProps {
   id: string
@@ -63,7 +64,7 @@ export function Coffee(props: CoffeeProps) {
 
       <AddItemsContainer>
         <p>
-          <span>R$</span> {price}
+          <span>R$</span> {price.toFixed(2)}
         </p>
 
         <div>
@@ -71,7 +72,9 @@ export function Coffee(props: CoffeeProps) {
           <input type="number" value={coffeeQuantity} disabled />
           <Plus alt="adicionar café" onClick={increaseCoffeeQuantity} />
         </div>
-        <img src={shoppingCart} alt="ir para o carrinho" />
+        <NavLink to="/Checkout" title="Checkout">
+          <img src={shoppingCart} alt="carrinho" />
+        </NavLink>
       </AddItemsContainer>
     </CoffeeItem>
   )

@@ -5,14 +5,10 @@ export const BaseInput = styled.input`
   height: 2.5rem;
   border: 0;
   background-color: ${(props) => props.theme['base-button']};
-  font-weight: bold;
   font-size: 1.125rem;
   padding: 0 0.5rem;
   color: ${(props) => props.theme['gray-100']};
-  &:focus {
-    box-shadow: none;
-    border: 2px solid ${(props) => props.theme.yellow};
-  }
+
   &::placeholder {
     color: ${(props) => props.theme['base-text']};
 
@@ -20,6 +16,47 @@ export const BaseInput = styled.input`
 
     font-weight: 400;
     line-height: 130%; /* 18.2px */
+  }
+`
+
+export interface InputPaymentContainerProps {
+  $isSelected: boolean
+}
+export const InputPaymentContainer = styled.div<InputPaymentContainerProps>`
+  input {
+    visibility: hidden;
+    appearance: none;
+  }
+  display: flex;
+  width: 12.5rem;
+
+  label {
+    padding: 1rem;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    text-transform: uppercase;
+    gap: 0.75rem;
+  }
+
+  flex: 1;
+
+  svg {
+    color: ${(props) => props.theme['purple-dark']};
+  }
+  background-color: ${(props) =>
+    props.$isSelected
+      ? props.theme['purple-light']
+      : props.theme['base-button']};
+
+  border: 1px solid
+    ${(props) =>
+      props.$isSelected ? props.theme['purple-dark'] : 'transparent'};
+
+  &:hover {
+    background-color: ${(props) =>
+      props.$isSelected ? '' : props.theme['base-hover']};
   }
 `
 
@@ -92,6 +129,12 @@ export const AddRemoveCoffeeContainer = styled.div`
   justify-content: center;
   gap: 0.25rem;
   padding-top: 0.375rem;
+
+  svg {
+    cursor: pointer;
+    color: ${(props) => props.theme['purple-dark']};
+  }
+
   div {
     display: flex;
     align-items: center;
@@ -99,6 +142,11 @@ export const AddRemoveCoffeeContainer = styled.div`
     border-radius: 6px;
     background: ${(props) => props.theme['base-button']};
     padding: 0.5rem;
+    gap: 0.5rem;
+  }
+
+  div:last-child {
+    cursor: pointer;
   }
 `
 

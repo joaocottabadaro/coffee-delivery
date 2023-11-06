@@ -3,10 +3,11 @@ import { CoffeeProps } from '../pages/Home/components/CoffeeSection/components/C
 import {
   decreaseCoffeeQuantityAction,
   increaseCoffeeQuantityAction,
+  removeCoffeeAction,
 } from '../reducers/coffees/actions'
 import { OrderReducer } from '../reducers/coffees/reducer'
 
-type UpdateCoffeeType = 'INCREASE' | 'DECREASE'
+type UpdateCoffeeType = 'INCREASE' | 'DECREASE' | 'REMOVE'
 
 interface OrderContextType {
   coffees: CoffeeProps[]
@@ -38,6 +39,9 @@ export default function OrderContextProvider({
         break
       case 'DECREASE':
         dispatch(decreaseCoffeeQuantityAction(selectedCoffee))
+        break
+      case 'REMOVE':
+        dispatch(removeCoffeeAction(selectedCoffee))
         break
       default:
         return ''

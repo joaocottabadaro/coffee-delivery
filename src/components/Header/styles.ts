@@ -19,10 +19,10 @@ export const HeaderContainer = styled.header`
       border-top: 3px solid transparent;
       border-bottom: 3px solid transparent;
       &:hover {
-        border-bottom: 3px solid ${(props) => props.theme['green-500']};
+        border-bottom: 3px solid ${(props) => props.theme['yellow-dark']};
       }
       &.active {
-        color: ${(props) => props.theme['green-500']};
+        color: ${(props) => props.theme['yellow-dark']};
       }
     }
   }
