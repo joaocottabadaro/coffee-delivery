@@ -1,5 +1,5 @@
-import expressoTradicional from '../../../../../../assets/expresso-tradicional.png'
 import shoppingCart from '../../../../../../assets/ShoppingCart.svg'
+
 import {
   AddItemsContainer,
   CoffeeDescription,
@@ -21,9 +21,10 @@ export interface CoffeeProps {
   description: string
   price: number
   quantity: number
+  photo: string
 }
 export function Coffee(props: CoffeeProps) {
-  const { name, types, description, price, id } = props
+  const { name, types, description, price, id, photo } = props
   const { coffees, updateCoffeeQuantity } = useContext(OrderContext)
   const [coffeeQuantity, setCoffeeQuantity] = useState(0)
   const isCoffeeInArray = (coffees: CoffeeProps[], id: string) => {
@@ -55,9 +56,11 @@ export function Coffee(props: CoffeeProps) {
 
   return (
     <CoffeeItem>
-      <CoffeeImage src={expressoTradicional} />
+      <CoffeeImage src={`../../../../../../assets/coffees/${photo}`} />
       <CoffeeTagContainer>
-        <CoffeeTag>{types}</CoffeeTag>
+        {types.map((type) => {
+          return <CoffeeTag key={type}>{type}</CoffeeTag>
+        })}
       </CoffeeTagContainer>
       <CoffeeTitle>{name}</CoffeeTitle>
       <CoffeeDescription>{description}</CoffeeDescription>

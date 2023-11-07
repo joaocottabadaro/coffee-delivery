@@ -1,15 +1,17 @@
 import styled from 'styled-components'
 
 export const CoffeeItem = styled.div`
+  background-color: ${(props) => props.theme[`base-card`]};
+
+  padding: 1.5rem;
   display: flex;
   flex-direction: column;
   align-items: center;
   width: 16rem;
-  height: 19rem;
-  background-color: ${(props) => props.theme[`base-card`]};
+  min-height: 19rem;
   border-radius: 6px 36px;
-
   padding: 1.5rem;
+  justify-content: space-between;
 
   input {
     width: fit-content;
@@ -62,6 +64,7 @@ export const CoffeeDescription = styled.p`
   color: ${(props) => props.theme[`base-label`]};
   margin-top: 0.5rem;
   margin-bottom: 2rem;
+  text-align: center;
 `
 export const CoffeeImage = styled.img`
   margin-top: -3.2rem;
