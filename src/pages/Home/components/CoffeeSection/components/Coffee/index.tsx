@@ -25,6 +25,7 @@ export interface CoffeeProps {
 }
 export function Coffee(props: CoffeeProps) {
   const { name, types, description, price, id, photo } = props
+  console.log('🚀 ~ file: index.tsx:28 ~ Coffee ~ photo:', photo)
   const { coffees, updateCoffeeQuantity } = useContext(OrderContext)
   const [coffeeQuantity, setCoffeeQuantity] = useState(0)
   const isCoffeeInArray = (coffees: CoffeeProps[], id: string) => {
@@ -56,7 +57,7 @@ export function Coffee(props: CoffeeProps) {
 
   return (
     <CoffeeItem>
-      <CoffeeImage src={`../../../../../../assets/coffees/${photo}`} />
+      <CoffeeImage src={`/coffees/${photo}`} />
       <CoffeeTagContainer>
         {types.map((type) => {
           return <CoffeeTag key={type}>{type}</CoffeeTag>
@@ -76,7 +77,11 @@ export function Coffee(props: CoffeeProps) {
           <Plus alt="adicionar café" onClick={increaseCoffeeQuantity} />
         </div>
         <NavLink to="/Checkout" title="Checkout">
-          <img src={shoppingCart} alt="carrinho" />
+          <img
+            src={shoppingCart}
+            alt="carrinho"
+            onClick={increaseCoffeeQuantity}
+          />
         </NavLink>
       </AddItemsContainer>
     </CoffeeItem>

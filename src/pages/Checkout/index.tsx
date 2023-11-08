@@ -1,3 +1,8 @@
+import * as zod from 'zod'
+import { OrderContext } from '../../contexts/OrderContextProvider'
+import { useContext } from 'react'
+import { useForm } from 'react-hook-form'
+import { zodResolver } from '@hookform/resolvers/zod'
 import {
   AddRemoveCoffeeContainer,
   BaseCard,
@@ -12,14 +17,9 @@ import {
   PaymentContainer,
   SelectedCoffee,
 } from './styles'
+import { Bank, Money, CreditCard, Trash, Plus, Minus } from 'phosphor-react'
 import location from '../../assets/location.svg'
 import { Button } from '../../components/Button'
-import { Bank, Money, CreditCard, Trash, Minus, Plus } from 'phosphor-react'
-
-import expressoTradicional from '../../assets/expresso-tradicional.png'
-import { OrderContext } from '../../contexts/OrderContextProvider'
-import { useContext } from 'react'
-import { useForm, SubmitHandler } from 'react-hook-form'
 
 type FormData = {
   cep: string
@@ -32,10 +32,37 @@ type FormData = {
   tipoPagamento: 'crédito' | 'débito' | 'dinheiro' | ''
 }
 
-export function Checkout() {
-  const { register, handleSubmit, watch } = useForm<FormData>()
+const newOrderFormValidationSchema = zod.object({
+  cep: zod.string().min(1, 'Informe o cep'),
+  rua: zod.string().min(1, 'Informe a rua'),
+  numero: zod.string().min(1, 'Informe o numero'),
+  complemento: zod.string().min(1, 'Informe o complemento'),
+  bairro: zod.string().min(1, 'Informe o bairro'),
+  cidade: zod.string().min(1, 'Informe a sua cidade'),
+  uf: zod.string().min(1, 'Informe o uf').max(1),
+  tipoPagamento: zod.enum(['crédito', 'débito', 'dinheiro', '']),
+})
 
-  const onSubmit: SubmitHandler<FormData> = (data) => {
+type NewOrderFormData = zod.infer<typeof newOrderFormValidationSchema>
+
+export function Checkout() {
+  const newCycleForm = useForm<NewOrderFormData>({
+    resolver: zodResolver(newOrderFormValidationSchema),
+    defaultValues: {
+      cep: '',
+      rua: '',
+      numero: '',
+      complemento: '',
+      bairro: '',
+      cidade: '',
+      uf: '',
+      tipoPagamento: '',
+    },
+  })
+
+  const { register, handleSubmit, watch } = newCycleForm
+
+  function handleOrderConfirmation(data: FormData) {
     console.log(data)
   }
 
@@ -52,7 +79,7 @@ export function Checkout() {
   const totalAmountCheckout = totalAmountItems + entrega
   return (
     <>
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form onSubmit={handleSubmit(handleOrderConfirmation)}>
         <FormContainer>
           <div>
             <h2>Complete seu pedido</h2>
@@ -148,7 +175,6 @@ export function Checkout() {
                   />
 
                   <label htmlFor="débito">
-                    {' '}
                     <Bank size={16} /> Cartão de débito
                   </label>
                 </InputPaymentContainer>
@@ -164,7 +190,6 @@ export function Checkout() {
                   />
 
                   <label htmlFor="dinheiro">
-                    {' '}
                     <Money size={16} /> Dinheiro
                   </label>
                 </InputPaymentContainer>
@@ -178,11 +203,7 @@ export function Checkout() {
               {coffees.map((coffee) => {
                 return (
                   <SelectedCoffee key={coffee.id}>
-                    <img
-                      src={expressoTradicional}
-                      height={64}
-                      alt="adicionar café"
-                    />
+                    <img src={coffee.photo} height={64} alt="adicionar café" />
                     <div>
                       <p>{coffee.name}</p>
                       <AddRemoveCoffeeContainer>

@@ -1,13 +1,15 @@
 import { produce } from 'immer'
 import { ActionTypes } from './actions'
 import { CoffeeProps } from '../../pages/Home/components/CoffeeSection/components/Coffee'
+import { OrderFormData } from '../../contexts/OrderContextProvider'
 
-export interface CoffeesState {
+export interface OrderState {
   coffees: CoffeeProps[]
+  orderData: OrderFormData
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export function OrderReducer(state: CoffeesState, action: any) {
+export function OrderReducer(state: OrderState, action: any) {
   switch (action.type) {
     case ActionTypes.DECREASE_COFFEE_QUANTITY: {
       const currentCoffeeIndex = state.coffees.findIndex((coffee) => {
@@ -47,6 +49,11 @@ export function OrderReducer(state: CoffeesState, action: any) {
 
       return produce(state, (draft) => {
         draft.coffees.splice(currentCoffeeIndex, 1)
+      })
+    }
+    case ActionTypes.CREATE_ORDER: {
+      return produce(state, (draft) => {
+        draft.orderData = action.payload.order
       })
     }
     default:

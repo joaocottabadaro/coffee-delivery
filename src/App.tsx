@@ -6,6 +6,7 @@ import { Checkout } from './pages/Checkout/index.tsx'
 import DefaultLayout from './layouts/DefaultLayouts/index.tsx'
 import { Home } from './pages/Home/index.tsx'
 import CoffeesContextProvider from './contexts/OrderContextProvider.tsx'
+import { OrderDetails } from './pages/OrderDetails/index.tsx'
 
 const router = createBrowserRouter([
   {
@@ -18,6 +19,10 @@ const router = createBrowserRouter([
       {
         path: 'Checkout',
         element: <Checkout />,
+      },
+      {
+        path: 'OrderDetails',
+        element: <OrderDetails />,
       },
     ],
   },

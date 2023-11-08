@@ -1,5 +1,5 @@
 import { BenefitsContainer, HeroContainer, InfoContainer } from './styles'
-import mainImage from '../../../../assets/main-image.png'
+import mainImage from '../../../../assets/mainImage.png'
 import cart from '../../../../assets/cart.svg'
 import coffee from '../../../../assets/coffee.svg'
 import box from '../../../../assets/box.svg'
