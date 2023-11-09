@@ -11,7 +11,6 @@ export function Button({
   variant = 'neutral',
   ...props
 }: ButtonProps) {
-  console.log('🚀 ~ file: index.tsx:14 ~ props:', props)
   return (
     <ButtonContainer $variant={variant} {...props}>
       {children}

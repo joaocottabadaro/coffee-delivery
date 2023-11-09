@@ -19,7 +19,7 @@ export const ButtonContainer = styled.button<ButtonContainerProps>`
   height: 50px;
   border-radius: 4px;
   border: 0;
-
+  cursor: pointer;
   display: flex;
   padding: 1rem;
   align-items: center;

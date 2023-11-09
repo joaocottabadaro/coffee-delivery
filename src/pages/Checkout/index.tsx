@@ -1,25 +1,20 @@
 import * as zod from 'zod'
 import { OrderContext } from '../../contexts/OrderContextProvider'
 import { useContext } from 'react'
-import { useForm } from 'react-hook-form'
+import { FormProvider, useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import {
   AddRemoveCoffeeContainer,
-  BaseCard,
-  BaseInput,
-  CardHeader,
   CheckoutCard,
   CheckoutContainer,
   CheckoutInfo,
   FormContainer,
-  FormGrid,
-  InputPaymentContainer,
-  PaymentContainer,
   SelectedCoffee,
 } from './styles'
-import { Bank, Money, CreditCard, Trash, Plus, Minus } from 'phosphor-react'
-import location from '../../assets/location.svg'
+import { Trash, Plus, Minus } from 'phosphor-react'
 import { Button } from '../../components/Button'
+import { useNavigate } from 'react-router-dom'
+import { AddressForm } from './components/AddressForm'
 
 type FormData = {
   cep: string
@@ -39,14 +34,15 @@ const newOrderFormValidationSchema = zod.object({
   complemento: zod.string().min(1, 'Informe o complemento'),
   bairro: zod.string().min(1, 'Informe o bairro'),
   cidade: zod.string().min(1, 'Informe a sua cidade'),
-  uf: zod.string().min(1, 'Informe o uf').max(1),
+  uf: zod.string().min(1, 'Informe o uf').max(2),
   tipoPagamento: zod.enum(['crédito', 'débito', 'dinheiro', '']),
 })
 
 type NewOrderFormData = zod.infer<typeof newOrderFormValidationSchema>
 
 export function Checkout() {
-  const newCycleForm = useForm<NewOrderFormData>({
+  const { createOrder } = useContext(OrderContext)
+  const newAddressForm = useForm<NewOrderFormData>({
     resolver: zodResolver(newOrderFormValidationSchema),
     defaultValues: {
       cep: '',
@@ -60,15 +56,17 @@ export function Checkout() {
     },
   })
 
-  const { register, handleSubmit, watch } = newCycleForm
+  const { handleSubmit } = newAddressForm
+  const navigate = useNavigate()
 
   function handleOrderConfirmation(data: FormData) {
-    console.log(data)
+    // Verifique se há erros antes de prosseguir
+
+    createOrder(data)
+    navigate('/OrderDetails')
   }
 
   const { coffees, updateCoffeeQuantity } = useContext(OrderContext)
-
-  const watchPagamento = watch('tipoPagamento')
 
   const entrega = 9.9
   const totalAmountItems = coffees.reduce((total, coffee) => {
@@ -81,121 +79,9 @@ export function Checkout() {
     <>
       <form onSubmit={handleSubmit(handleOrderConfirmation)}>
         <FormContainer>
-          <div>
-            <h2>Complete seu pedido</h2>
-            <BaseCard>
-              <CardHeader>
-                <img src={location} alt="localização" />
-                <div>
-                  <h3>Endereço de entrega</h3>
-                  <h4>Informe o endereço onde deseja receber seu pedido</h4>
-                </div>
-              </CardHeader>
-              <FormGrid>
-                <BaseInput
-                  type="text"
-                  id="cep"
-                  {...register('cep')}
-                  placeholder="CEP"
-                />
-                <BaseInput
-                  type="text"
-                  id="rua"
-                  {...register('rua')}
-                  placeholder="Rua"
-                />
-                <BaseInput
-                  type="number"
-                  id="numero"
-                  {...register('numero')}
-                  placeholder="Número"
-                />
-                <BaseInput
-                  type="text"
-                  id="complemento"
-                  {...register('complemento')}
-                  placeholder="Complemento"
-                />
-
-                <BaseInput
-                  type="text"
-                  id="bairro"
-                  {...register('bairro')}
-                  placeholder="Bairro"
-                />
-                <BaseInput
-                  type="text"
-                  {...register('cidade')}
-                  placeholder="Cidade"
-                />
-                <BaseInput
-                  type="text"
-                  id="uf"
-                  {...register('uf')}
-                  placeholder="UF"
-                />
-              </FormGrid>
-            </BaseCard>
-            <BaseCard>
-              <CardHeader>
-                <img src={location} alt="localização" />
-                <div>
-                  <h3>Pagamento</h3>
-                  <h4>
-                    O pagamento é feito na entrega. Escolha a forma que deseja
-                    pagar
-                  </h4>
-                </div>
-              </CardHeader>
-              <PaymentContainer>
-                <InputPaymentContainer
-                  $isSelected={watchPagamento === 'crédito'}
-                >
-                  <input
-                    type="radio"
-                    id="crédito"
-                    value="crédito"
-                    {...register('tipoPagamento')}
-                  />
-
-                  <label htmlFor="crédito">
-                    {' '}
-                    <CreditCard size={16} /> Cartão de crédito
-                  </label>
-                </InputPaymentContainer>
-
-                <InputPaymentContainer
-                  $isSelected={watchPagamento === 'débito'}
-                >
-                  <input
-                    type="radio"
-                    id="débito"
-                    value="débito"
-                    {...register('tipoPagamento')}
-                  />
-
-                  <label htmlFor="débito">
-                    <Bank size={16} /> Cartão de débito
-                  </label>
-                </InputPaymentContainer>
-
-                <InputPaymentContainer
-                  $isSelected={watchPagamento === 'dinheiro'}
-                >
-                  <input
-                    type="radio"
-                    id="dinheiro"
-                    value="dinheiro"
-                    {...register('tipoPagamento')}
-                  />
-
-                  <label htmlFor="dinheiro">
-                    <Money size={16} /> Dinheiro
-                  </label>
-                </InputPaymentContainer>
-              </PaymentContainer>
-            </BaseCard>
-          </div>
+          <FormProvider {...newAddressForm}>
+            <AddressForm />
+          </FormProvider>
 
           <div>
             <h2>Cafés selecionados</h2>
@@ -203,7 +89,11 @@ export function Checkout() {
               {coffees.map((coffee) => {
                 return (
                   <SelectedCoffee key={coffee.id}>
-                    <img src={coffee.photo} height={64} alt="adicionar café" />
+                    <img
+                      src={`/coffees/${coffee.photo}`}
+                      height={64}
+                      alt="adicionar café"
+                    />
                     <div>
                       <p>{coffee.name}</p>
                       <AddRemoveCoffeeContainer>
@@ -251,7 +141,11 @@ export function Checkout() {
                   <strong>R$ {totalAmountCheckout.toFixed(2)}</strong>
                 </CheckoutInfo>
 
-                <Button variant="primary" type="submit">
+                <Button
+                  variant="primary"
+                  type="submit"
+                  onClick={() => console.log('Botão Clicado')}
+                >
                   Confirmar Pedido
                 </Button>
               </CheckoutContainer>

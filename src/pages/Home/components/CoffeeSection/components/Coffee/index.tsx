@@ -25,7 +25,6 @@ export interface CoffeeProps {
 }
 export function Coffee(props: CoffeeProps) {
   const { name, types, description, price, id, photo } = props
-  console.log('🚀 ~ file: index.tsx:28 ~ Coffee ~ photo:', photo)
   const { coffees, updateCoffeeQuantity } = useContext(OrderContext)
   const [coffeeQuantity, setCoffeeQuantity] = useState(0)
   const isCoffeeInArray = (coffees: CoffeeProps[], id: string) => {
@@ -45,7 +44,6 @@ export function Coffee(props: CoffeeProps) {
 
   useEffect(() => {
     if (coffees.length > 0 && isCoffeeInArray(coffees, id)) {
-      console.log('id', id)
       const currentCoffeeIndex = coffees.findIndex((coffee) => {
         return coffee.id === id
       })
