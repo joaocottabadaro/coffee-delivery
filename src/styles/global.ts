@@ -7,7 +7,7 @@ export const GlobalStyle = createGlobalStyle`
     padding:0;
     box-sizing:border-box;
 
-    @media   (max-width:1000px){
+    @media   (max-width:700px){
       font-size:90%
     }
 }
@@ -32,6 +32,7 @@ body,input, textarea, button{
 
   
 } 
+
 
 
 input::-webkit-outer-spin-button,

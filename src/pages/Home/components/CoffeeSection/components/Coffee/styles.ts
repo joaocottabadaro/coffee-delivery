@@ -78,7 +78,9 @@ export const AddItemsContainer = styled.div`
   gap: 0.6rem;
   p {
     color: ${(props) => props.theme[`base-text`]};
-
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
     /* Title/Title M */
     font-family: 'Baloo 2';
     font-size: 1.5rem;
@@ -115,5 +117,8 @@ export const AddItemsContainer = styled.div`
 
   svg {
     cursor: pointer;
+
+    width: 1rem;
+    height: 1rem;
   }
 `

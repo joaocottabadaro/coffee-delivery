@@ -4,6 +4,16 @@ export const OrderDetailsWrapper = styled.div`
   display: flex;
   margin-top: 5rem;
   flex-direction: column;
+
+  p,
+  strong {
+    font-size: 1rem;
+  }
+
+  @media (max-width: 980px) {
+    align-items: center;
+    margin-top: 0;
+  }
 `
 export const OrderHeader = styled.div`
   display: flex;
@@ -22,10 +32,16 @@ export const OrderHeader = styled.div`
   margin-bottom: 2.5rem;
 `
 export const DetailsContainer = styled.div`
-  display: grid;
-  grid-template-columns: auto auto;
+  display: flex;
+  flex-direction: row;
+
   gap: 6.25rem;
   width: 100%;
+
+  @media (max-width: 980px) {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
 `
 
 export const OrderItem = styled.div`

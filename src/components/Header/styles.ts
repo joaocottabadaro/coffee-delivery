@@ -7,6 +7,7 @@ export const HeaderContainer = styled.header`
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 0.7rem;
   position: sticky;
   top: 0;
   left: 0;
@@ -16,10 +17,10 @@ export const HeaderContainer = styled.header`
     display: flex;
     align-items: center;
     justify-content: center;
+    gap: 0.7rem;
     a {
       width: 3rem;
       height: 3rem;
-
       display: flex;
       align-items: center;
       justify-content: center;
@@ -46,7 +47,7 @@ export const HeaderContainer = styled.header`
 `
 
 interface HeaderButtonProps {
-  variant: 'purple' | 'yellow'
+  $variant: 'purple' | 'yellow'
 }
 
 export const HeaderButton = styled.button<HeaderButtonProps>`
@@ -55,6 +56,7 @@ export const HeaderButton = styled.button<HeaderButtonProps>`
   justify-content: center;
   gap: 4px;
   min-width: 2.3rem;
+  width: 100%;
   height: 2.3rem;
   border-radius: 6px;
   border: none;
@@ -66,13 +68,13 @@ export const HeaderButton = styled.button<HeaderButtonProps>`
   }
   color: ${(props) => props.theme[`purple-dark`]};
   background-color: ${(props) =>
-    props.variant === 'yellow'
+    props.$variant === 'yellow'
       ? props.theme[`yellow-light`]
       : props.theme[`purple-light`]};
 
   svg {
     fill: ${(props) =>
-      props.variant === 'yellow'
+      props.$variant === 'yellow'
         ? props.theme[`yellow-dark`]
         : props.theme[`purple-dark`]};
   }

@@ -14,12 +14,12 @@ export default function Header() {
       </NavLink>
 
       <nav>
-        <HeaderButton variant="purple">
+        <HeaderButton $variant="purple">
           <MapPin size={20} weight="fill" />
-          Porto Alegre, RS
+          Belo Horizonte, MG
         </HeaderButton>
         <NavLink to="/Checkout" title="Checkout">
-          <HeaderButton variant="yellow">
+          <HeaderButton $variant="yellow">
             {coffees.length >= 1 && <span>{coffees.length}</span>}
             <ShoppingCart size={20} weight="fill" />
           </HeaderButton>

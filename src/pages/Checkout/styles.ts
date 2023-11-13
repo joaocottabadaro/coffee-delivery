@@ -6,8 +6,17 @@ export const FormContainer = styled.div`
   grid-template-columns: auto auto;
   column-gap: 2rem;
 
-  @media (max-width: 1300px) {
-    grid-template-columns: auto;
+  @media (max-width: 1100px) {
+    display: flex;
+    flex-direction: column;
+  }
+
+  h2 {
+    font-size: 1.125rem;
+  }
+
+  h3 {
+    font-size: 1rem;
   }
 `
 
@@ -26,6 +35,12 @@ export const SelectedCoffee = styled.div`
 
   strong {
     margin-left: auto;
+  }
+
+  p,
+  span,
+  strong {
+    font-size: 1rem;
   }
 `
 export const AddRemoveCoffeeContainer = styled.div`
@@ -64,7 +79,7 @@ export const CheckoutInfo = styled.div`
   font-style: normal;
   font-weight: 400;
   line-height: 130%;
-
+  font-size: 1rem;
   p:first-child {
     font-size: 0.875rem;
   }
@@ -78,6 +93,10 @@ export const CheckoutContainer = styled.div`
 
   & > div {
     width: 100%;
+  }
+
+  strong {
+    font-size: 1.25rem;
   }
 
   button {

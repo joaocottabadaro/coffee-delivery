@@ -1,4 +1,4 @@
-import { ReactNode, createContext, useReducer } from 'react'
+import { ReactNode, createContext, useEffect, useReducer } from 'react'
 import { Coffee } from '../pages/Home/components/CoffeeSection/components/Coffee'
 import {
   decreaseCoffeeQuantityAction,
@@ -6,7 +6,7 @@ import {
   removeAllCoffeesAction,
   removeCoffeeAction,
 } from '../reducers/coffees/actions'
-import { OrderReducer } from '../reducers/coffees/reducer'
+import { OrderReducer, OrderState } from '../reducers/coffees/reducer'
 
 type UpdateCoffeeType = 'INCREASE' | 'DECREASE' | 'REMOVE'
 
@@ -28,9 +28,18 @@ interface OrderContextProviderProps {
 export default function OrderContextProvider({
   children,
 }: OrderContextProviderProps) {
-  const [orderState, dispatch] = useReducer(OrderReducer, {
-    coffees: [],
-  })
+  const [orderState, dispatch] = useReducer(
+    OrderReducer,
+    {
+      coffees: [],
+    },
+    getStoredCoffees,
+  )
+
+  useEffect(() => {
+    const stateJSON = JSON.stringify(orderState)
+    localStorage.setItem('@coffee-delivery:order-state-1.0.0', stateJSON)
+  }, [orderState])
 
   function updateCoffeeQuantity(
     selectedCoffee: Coffee,
@@ -54,6 +63,15 @@ export default function OrderContextProvider({
     dispatch(removeAllCoffeesAction())
   }
 
+  function getStoredCoffees(initialState: OrderState) {
+    const storedCoffees = localStorage.getItem(
+      '@coffee-delivery:order-state-1.0.0',
+    )
+
+    if (storedCoffees) return JSON.parse(storedCoffees)
+
+    return initialState
+  }
   const { coffees } = orderState
   return (
     <OrderContext.Provider

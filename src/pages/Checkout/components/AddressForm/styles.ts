@@ -46,8 +46,29 @@ export const FormGrid = styled.div`
     grid-column: span 3;
   }
 
+  p {
+    font-size: 1rem;
+  }
   .complemento {
     grid-column: span 2;
+  }
+
+  @media (max-width: 700px) {
+    grid-template-columns: auto auto;
+
+    .cep {
+      grid-column: auto;
+      max-width: none;
+    }
+
+    .rua {
+      grid-column: auto;
+    }
+  }
+  @media (max-width: 500px) {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
   }
 `
 
@@ -79,6 +100,7 @@ export const InputPaymentContainer = styled.div<InputPaymentContainerProps>`
     appearance: none;
   }
   display: flex;
+
   width: 12.5rem;
 
   label {
@@ -89,12 +111,15 @@ export const InputPaymentContainer = styled.div<InputPaymentContainerProps>`
     justify-content: flex-start;
     text-transform: uppercase;
     gap: 0.75rem;
+    font-size: 1rem;
   }
 
   flex: 1;
 
   svg {
     color: ${(props) => props.theme['purple-dark']};
+    height: 1.5rem;
+    width: 1.5rem;
   }
   background-color: ${(props) =>
     props.$isSelected
@@ -114,6 +139,7 @@ export const PaymentContainer = styled.div`
   display: flex;
   gap: 0.75rem;
   padding-bottom: 0.5rem;
+  flex-wrap: wrap;
   button {
     flex: 1;
     justify-content: center;
@@ -122,4 +148,6 @@ export const PaymentContainer = styled.div`
 
 export const PaymentTypeError = styled.p`
   color: ${(props) => props.theme['base-error']};
+
+  font-size: 1rem;
 `
