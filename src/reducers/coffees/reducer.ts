@@ -1,11 +1,9 @@
 import { produce } from 'immer'
 import { ActionTypes } from './actions'
-import { CoffeeProps } from '../../pages/Home/components/CoffeeSection/components/Coffee'
-import { OrderFormData } from '../../contexts/OrderContextProvider'
+import { Coffee } from '../../pages/Home/components/CoffeeSection/components/Coffee'
 
 export interface OrderState {
-  coffees: CoffeeProps[]
-  orderData: OrderFormData
+  coffees: Coffee[]
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -51,11 +49,13 @@ export function OrderReducer(state: OrderState, action: any) {
         draft.coffees.splice(currentCoffeeIndex, 1)
       })
     }
-    case ActionTypes.CREATE_ORDER: {
+
+    case ActionTypes.REMOVE_ALL_COFFEES: {
       return produce(state, (draft) => {
-        draft.orderData = action.payload.order
+        draft.coffees = [] // Remove todos os itens da sacola
       })
     }
+
     default:
       return state
   }

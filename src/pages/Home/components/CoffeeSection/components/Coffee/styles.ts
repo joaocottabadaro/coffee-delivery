@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-export const CoffeeItem = styled.div`
+export const CoffeeContainer = styled.div`
   background-color: ${(props) => props.theme[`base-card`]};
 
   padding: 1.5rem;
@@ -39,7 +39,6 @@ export const CoffeeTag = styled.span`
 
   color: ${(props) => props.theme['yellow-dark']};
   width: 5rem;
-  font-family: Roboto;
   font-size: 0.625rem;
   font-style: normal;
   font-weight: 700;
@@ -76,6 +75,7 @@ export const AddItemsContainer = styled.div`
   width: 100%;
   align-items: center;
   justify-content: space-between;
+  gap: 0.6rem;
   p {
     color: ${(props) => props.theme[`base-text`]};
 

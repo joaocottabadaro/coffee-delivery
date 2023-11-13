@@ -16,6 +16,12 @@ import { Button } from '../../components/Button'
 import { useNavigate } from 'react-router-dom'
 import { AddressForm } from './components/AddressForm'
 
+enum PaymentTypes {
+  crédito = 'crédito',
+  débito = 'débito',
+  dinheiro = 'dinheiro',
+}
+
 type FormData = {
   cep: string
   rua: string
@@ -24,7 +30,7 @@ type FormData = {
   bairro: string
   cidade: string
   uf: string
-  tipoPagamento: 'crédito' | 'débito' | 'dinheiro' | ''
+  tipoPagamento: PaymentTypes
 }
 
 const newOrderFormValidationSchema = zod.object({
@@ -34,14 +40,17 @@ const newOrderFormValidationSchema = zod.object({
   complemento: zod.string().min(1, 'Informe o complemento'),
   bairro: zod.string().min(1, 'Informe o bairro'),
   cidade: zod.string().min(1, 'Informe a sua cidade'),
-  uf: zod.string().min(1, 'Informe o uf').max(2),
-  tipoPagamento: zod.enum(['crédito', 'débito', 'dinheiro', '']),
+  uf: zod.string().min(1, 'Informe o UF').max(2),
+  tipoPagamento: zod.nativeEnum(PaymentTypes, {
+    errorMap: () => {
+      return { message: 'Informe o método de pagamento' }
+    },
+  }),
 })
 
 type NewOrderFormData = zod.infer<typeof newOrderFormValidationSchema>
 
 export function Checkout() {
-  const { createOrder } = useContext(OrderContext)
   const newAddressForm = useForm<NewOrderFormData>({
     resolver: zodResolver(newOrderFormValidationSchema),
     defaultValues: {
@@ -52,21 +61,20 @@ export function Checkout() {
       bairro: '',
       cidade: '',
       uf: '',
-      tipoPagamento: '',
+      tipoPagamento: undefined,
     },
   })
 
   const { handleSubmit } = newAddressForm
   const navigate = useNavigate()
+  const { coffees, updateCoffeeQuantity, removeAllCoffees } =
+    useContext(OrderContext)
 
   function handleOrderConfirmation(data: FormData) {
     // Verifique se há erros antes de prosseguir
-
-    createOrder(data)
-    navigate('/OrderDetails')
+    removeAllCoffees()
+    navigate('/OrderDetails', { state: data })
   }
-
-  const { coffees, updateCoffeeQuantity } = useContext(OrderContext)
 
   const entrega = 9.9
   const totalAmountItems = coffees.reduce((total, coffee) => {
@@ -86,6 +94,9 @@ export function Checkout() {
           <div>
             <h2>Cafés selecionados</h2>
             <CheckoutCard>
+              {coffees.length === 0 && (
+                <h3>Por favor, selecione um item antes de continuar</h3>
+              )}
               {coffees.map((coffee) => {
                 return (
                   <SelectedCoffee key={coffee.id}>
@@ -144,7 +155,7 @@ export function Checkout() {
                 <Button
                   variant="primary"
                   type="submit"
-                  onClick={() => console.log('Botão Clicado')}
+                  disabled={coffees.length === 0}
                 >
                   Confirmar Pedido
                 </Button>

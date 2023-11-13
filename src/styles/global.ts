@@ -6,6 +6,10 @@ export const GlobalStyle = createGlobalStyle`
     margin:0;
     padding:0;
     box-sizing:border-box;
+
+    @media   (max-width:1000px){
+      font-size:90%
+    }
 }
 
 :focus{
@@ -24,6 +28,9 @@ body,input, textarea, button{
     background-color:   ${(props) => props.theme[`base-input`]};
     font-weight:400;
     font-size:1rem;
+
+
+  
 } 
 
 

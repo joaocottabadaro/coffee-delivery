@@ -4,7 +4,7 @@ import {
   AddItemsContainer,
   CoffeeDescription,
   CoffeeImage,
-  CoffeeItem,
+  CoffeeContainer,
   CoffeeTag,
   CoffeeTagContainer,
   CoffeeTitle,
@@ -14,7 +14,7 @@ import { OrderContext } from '../../../../../../contexts/OrderContextProvider'
 import { Minus, Plus } from 'phosphor-react'
 import { NavLink } from 'react-router-dom'
 
-export interface CoffeeProps {
+export interface Coffee {
   id: string
   name: string
   types: string[]
@@ -23,11 +23,16 @@ export interface CoffeeProps {
   quantity: number
   photo: string
 }
-export function Coffee(props: CoffeeProps) {
-  const { name, types, description, price, id, photo } = props
+
+export interface CoffeeProps {
+  coffee: Coffee
+}
+
+export function CoffeeItem({ coffee }: CoffeeProps) {
+  const { name, types, description, price, id, photo } = coffee
   const { coffees, updateCoffeeQuantity } = useContext(OrderContext)
   const [coffeeQuantity, setCoffeeQuantity] = useState(0)
-  const isCoffeeInArray = (coffees: CoffeeProps[], id: string) => {
+  const isCoffeeInArray = (coffees: Coffee[], id: string) => {
     const coffeeIds = coffees.map((coffee) => coffee.id) // Crie um array apenas com os IDs dos cafés
     const isCoffeeInArray = coffeeIds.includes(id) // Use Array.includes para verificar se o ID está no array
 
@@ -35,11 +40,11 @@ export function Coffee(props: CoffeeProps) {
   }
 
   function increaseCoffeeQuantity() {
-    updateCoffeeQuantity(props, 'INCREASE')
+    updateCoffeeQuantity(coffee, 'INCREASE')
   }
 
   function decreaseCoffeeQuantity() {
-    updateCoffeeQuantity(props, 'DECREASE')
+    updateCoffeeQuantity(coffee, 'DECREASE')
   }
 
   useEffect(() => {
@@ -54,7 +59,7 @@ export function Coffee(props: CoffeeProps) {
   }, [coffees, id])
 
   return (
-    <CoffeeItem>
+    <CoffeeContainer>
       <CoffeeImage src={`/coffees/${photo}`} />
       <CoffeeTagContainer>
         {types.map((type) => {
@@ -82,6 +87,6 @@ export function Coffee(props: CoffeeProps) {
           />
         </NavLink>
       </AddItemsContainer>
-    </CoffeeItem>
+    </CoffeeContainer>
   )
 }

@@ -1,9 +1,12 @@
 import { NavLink } from 'react-router-dom'
-import { HeaderContainer } from './styles'
+import { HeaderButton, HeaderContainer } from './styles'
 import logo from '../../assets/logo.svg'
-import headerCart from '../../assets/headerCart.svg'
+import { MapPin, ShoppingCart } from 'phosphor-react'
+import { useContext } from 'react'
+import { OrderContext } from '../../contexts/OrderContextProvider'
 
 export default function Header() {
+  const { coffees } = useContext(OrderContext)
   return (
     <HeaderContainer>
       <NavLink to="/" title="home">
@@ -11,8 +14,15 @@ export default function Header() {
       </NavLink>
 
       <nav>
+        <HeaderButton variant="purple">
+          <MapPin size={20} weight="fill" />
+          Porto Alegre, RS
+        </HeaderButton>
         <NavLink to="/Checkout" title="Checkout">
-          <img src={headerCart} alt="carrinho" />
+          <HeaderButton variant="yellow">
+            {coffees.length >= 1 && <span>{coffees.length}</span>}
+            <ShoppingCart size={20} weight="fill" />
+          </HeaderButton>
         </NavLink>
       </nav>
     </HeaderContainer>

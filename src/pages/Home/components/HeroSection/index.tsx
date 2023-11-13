@@ -1,4 +1,9 @@
-import { BenefitsContainer, HeroContainer, InfoContainer } from './styles'
+import {
+  BenefitsContainer,
+  HeroContainer,
+  InfoContainer,
+  HeroImage,
+} from './styles'
 import mainImage from '../../../../assets/mainImage.png'
 import cart from '../../../../assets/cart.svg'
 import coffee from '../../../../assets/coffee.svg'
@@ -34,7 +39,7 @@ export function HeroSection() {
           </div>
         </BenefitsContainer>
       </InfoContainer>
-      <img src={mainImage} alt="big coffee"></img>
+      <HeroImage src={mainImage} alt="big coffee" />
     </HeroContainer>
   )
 }

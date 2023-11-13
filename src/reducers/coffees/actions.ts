@@ -1,14 +1,13 @@
-import { OrderFormData } from '../../contexts/OrderContextProvider'
-import { CoffeeProps } from '../../pages/Home/components/CoffeeSection/components/Coffee'
+import { Coffee } from '../../pages/Home/components/CoffeeSection/components/Coffee'
 
 export enum ActionTypes {
   INCREASE_COFFEE_QUANTITY = 'INCREASE_COFFEE_QUANTITY',
   DECREASE_COFFEE_QUANTITY = 'DECREASE_COFFEE_QUANTITY',
   REMOVE_COFFEE_QUANTITY = 'REMOVE_COFFEE_QUANTITY',
-  CREATE_ORDER = 'CREATE_ORDER',
+  REMOVE_ALL_COFFEES = 'REMOVE_ALL_COFFEES',
 }
 
-export function increaseCoffeeQuantityAction(coffee: CoffeeProps) {
+export function increaseCoffeeQuantityAction(coffee: Coffee) {
   return {
     type: ActionTypes.INCREASE_COFFEE_QUANTITY,
     payload: {
@@ -16,7 +15,7 @@ export function increaseCoffeeQuantityAction(coffee: CoffeeProps) {
     },
   }
 }
-export function decreaseCoffeeQuantityAction(coffee: CoffeeProps) {
+export function decreaseCoffeeQuantityAction(coffee: Coffee) {
   return {
     type: ActionTypes.DECREASE_COFFEE_QUANTITY,
     payload: {
@@ -24,7 +23,7 @@ export function decreaseCoffeeQuantityAction(coffee: CoffeeProps) {
     },
   }
 }
-export function removeCoffeeAction(coffee: CoffeeProps) {
+export function removeCoffeeAction(coffee: Coffee) {
   return {
     type: ActionTypes.REMOVE_COFFEE_QUANTITY,
     payload: {
@@ -32,11 +31,8 @@ export function removeCoffeeAction(coffee: CoffeeProps) {
     },
   }
 }
-export function createOrderAction(order: OrderFormData) {
+export function removeAllCoffeesAction() {
   return {
-    type: ActionTypes.CREATE_ORDER,
-    payload: {
-      order,
-    },
+    type: ActionTypes.REMOVE_ALL_COFFEES,
   }
 }

@@ -1,34 +1,22 @@
 import { ReactNode, createContext, useReducer } from 'react'
-import { CoffeeProps } from '../pages/Home/components/CoffeeSection/components/Coffee'
+import { Coffee } from '../pages/Home/components/CoffeeSection/components/Coffee'
 import {
-  createOrderAction,
   decreaseCoffeeQuantityAction,
   increaseCoffeeQuantityAction,
+  removeAllCoffeesAction,
   removeCoffeeAction,
 } from '../reducers/coffees/actions'
 import { OrderReducer } from '../reducers/coffees/reducer'
 
 type UpdateCoffeeType = 'INCREASE' | 'DECREASE' | 'REMOVE'
 
-export interface OrderFormData {
-  cep: string
-  rua: string
-  numero: string
-  complemento: string
-  bairro: string
-  cidade: string
-  uf: string
-  tipoPagamento: 'crédito' | 'débito' | 'dinheiro' | ''
-}
-
 interface OrderContextType {
-  coffees: CoffeeProps[]
+  coffees: Coffee[]
   updateCoffeeQuantity: (
-    selectedCoffee: CoffeeProps,
+    selectedCoffee: Coffee,
     action: UpdateCoffeeType,
   ) => void
-  orderData: OrderFormData
-  createOrder: (orderData: OrderFormData) => void
+  removeAllCoffees: () => void
 }
 
 export const OrderContext = createContext({} as OrderContextType)
@@ -42,24 +30,10 @@ export default function OrderContextProvider({
 }: OrderContextProviderProps) {
   const [orderState, dispatch] = useReducer(OrderReducer, {
     coffees: [],
-    orderData: {
-      cep: '',
-      rua: '',
-      numero: '',
-      complemento: '',
-      bairro: '',
-      cidade: '',
-      uf: '',
-      tipoPagamento: '',
-    },
   })
 
-  function createOrder(data: OrderFormData) {
-    dispatch(createOrderAction(data))
-  }
-
   function updateCoffeeQuantity(
-    selectedCoffee: CoffeeProps,
+    selectedCoffee: Coffee,
     action: UpdateCoffeeType,
   ) {
     switch (action) {
@@ -76,14 +50,16 @@ export default function OrderContextProvider({
         return ''
     }
   }
+  function removeAllCoffees() {
+    dispatch(removeAllCoffeesAction())
+  }
 
-  const { coffees, orderData } = orderState
+  const { coffees } = orderState
   return (
     <OrderContext.Provider
       value={{
         coffees,
-        orderData,
-        createOrder,
+        removeAllCoffees,
         updateCoffeeQuantity,
       }}
     >

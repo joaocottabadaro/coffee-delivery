@@ -113,9 +113,13 @@ export const InputPaymentContainer = styled.div<InputPaymentContainerProps>`
 export const PaymentContainer = styled.div`
   display: flex;
   gap: 0.75rem;
-
+  padding-bottom: 0.5rem;
   button {
     flex: 1;
     justify-content: center;
   }
+`
+
+export const PaymentTypeError = styled.p`
+  color: ${(props) => props.theme['base-error']};
 `

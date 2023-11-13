@@ -4,9 +4,14 @@ export const HeroContainer = styled.section`
   display: flex;
   flex-direction: row;
   align-items: flex-start;
-  margin: 5.875rem 0;
+
   gap: 3.5rem;
 
+  @media (max-width: 1000px) {
+    flex-direction: column-reverse;
+    align-items: center;
+    text-align: center;
+  }
   h1 {
     color: ${(props) => props.theme['base-title']};
 
@@ -33,13 +38,18 @@ export const InfoContainer = styled.div`
   flex-direction: column;
   justify-content: center;
 `
+export const HeroImage = styled.img`
+  @media (max-width: 460px) {
+    width: 100%;
+    height: auto;
+  }
+`
 export const BenefitsContainer = styled.div`
   display: grid;
   grid-template-columns: auto auto;
-  margin-top: 4.125rem;
   column-gap: 3rem;
   row-gap: 1.25rem;
-
+  margin-top: 4rem;
   div {
     display: flex;
     align-items: center;
@@ -53,5 +63,9 @@ export const BenefitsContainer = styled.div`
 
       color: ${(props) => props.theme[`base-text`]};
     }
+  }
+
+  @media (max-width: 1000px) {
+    justify-content: center;
   }
 `

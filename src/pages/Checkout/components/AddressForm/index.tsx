@@ -8,6 +8,7 @@ import {
   InputPaymentContainer,
   InputWrapper,
   PaymentContainer,
+  PaymentTypeError,
 } from './styles'
 import { Bank, CreditCard, Money } from 'phosphor-react'
 
@@ -153,8 +154,10 @@ export function AddressForm() {
               <Money size={16} /> Dinheiro
             </label>
           </InputPaymentContainer>
-          {errors.tipoPagamento && <p>{errors.tipoPagamento.message}</p>}
         </PaymentContainer>
+        {errors.tipoPagamento && (
+          <PaymentTypeError>{errors.tipoPagamento.message}</PaymentTypeError>
+        )}
       </Card>
     </div>
   )

@@ -5,10 +5,17 @@ export const FormContainer = styled.div`
   display: grid;
   grid-template-columns: auto auto;
   column-gap: 2rem;
+
+  @media (max-width: 1300px) {
+    grid-template-columns: auto;
+  }
 `
 
 export const CheckoutCard = styled(BaseCard)`
   border-radius: 6px 44px;
+  h3 {
+    text-align: center;
+  }
 `
 
 export const SelectedCoffee = styled.div`
